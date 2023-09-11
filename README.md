@@ -1,3 +1,6 @@
+Please add the issue tab to repo
+
+
 # launch_review
 
 [![pub package](https://img.shields.io/pub/v/launch_review.svg)](https://pub.dartlang.org/packages/launch_review)
