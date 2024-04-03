@@ -1,36 +1,15 @@
 #import "StoreRedirectPlugin.h"
+#if __has_include(<store_redirect/store_redirect-Swift.h>)
+#import <store_redirect/store_redirect-Swift.h>
+#else
+// Support project import fallback if the generated compatibility header
+// is not copied when this plugin is created as a library.
+// https://forums.swift.org/t/swift-static-libraries-dont-copy-generated-objective-c-header/19816
+#import "store_redirect-Swift.h"
+#endif
 
 @implementation StoreRedirectPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-    FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"store_redirect"
-                                     binaryMessenger:[registrar messenger]];
-    StoreRedirectPlugin* instance = [[StoreRedirectPlugin alloc] init];
-    [registrar addMethodCallDelegate:instance channel:channel];
+  [SwiftStoreRedirectPlugin registerWithRegistrar:registrar];
 }
-
-- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    if ([@"redirect" isEqualToString:call.method]) {
-        NSString *appId = call.arguments[@"ios_id"];
-        if (!appId.length) {
-            result([FlutterError errorWithCode:@"ERROR"
-                                       message:@"Invalid app id"
-                                       details:nil]);
-        } else {
-            NSString* iTunesLink;
-            if([[[UIDevice currentDevice] systemVersion] floatValue] >= 11) {
-                iTunesLink = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/xy/app/foo/id%@", appId];
-            } else {
-                iTunesLink = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appId];
-            }
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
-            
-            result(nil);
-        }
-    } else {
-        result(FlutterMethodNotImplemented);
-    }
-}
-
 @end

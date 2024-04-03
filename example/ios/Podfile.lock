@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - store_redirect (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - store_redirect (from `.symlinks/plugins/store_redirect/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  store_redirect:
+    :path: ".symlinks/plugins/store_redirect/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  store_redirect: 3be2dda3480d88e83799b3bf9c3785535577dff8
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.1
