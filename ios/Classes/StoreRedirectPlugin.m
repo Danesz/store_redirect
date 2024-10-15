@@ -12,16 +12,21 @@
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([@"redirect" isEqualToString:call.method]) {
         NSString *appId = call.arguments[@"ios_id"];
+        BOOL review = [call.arguments[@"review"] boolValue];
         if (!appId.length) {
             result([FlutterError errorWithCode:@"ERROR"
                                        message:@"Invalid app id"
                                        details:nil]);
         } else {
             NSString* iTunesLink;
-            if([[[UIDevice currentDevice] systemVersion] floatValue] >= 11) {
-                iTunesLink = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/xy/app/foo/id%@", appId];
+            if(review) {
+                iTunesLink = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@?action=write-review", appId];
             } else {
-                iTunesLink = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appId];
+                if([[[UIDevice currentDevice] systemVersion] floatValue] >= 11) {
+                    iTunesLink = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appId];
+                } else {
+                    iTunesLink = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appId];
+                }
             }
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
