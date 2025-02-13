@@ -1,3 +1,7 @@
+## 2.0.4
+
+¯ Added support for Flutter 3.29.0 (removed `registerWith`, thanks to @Eufranio)
+
 ## 2.0.3
 
 * Updated Android compileSdkVersion to 34 (thanks to @rvermaSurecost)
